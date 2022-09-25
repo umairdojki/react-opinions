@@ -6,9 +6,7 @@ import { getNearbyEstablishments } from 'src/shared/apis/food-hygiene-api';
 import { Establishment } from 'src/shared/models/food-hygiene';
 
 function shuffleTop10(establishments: Establishment[]) {
-    return faker.helpers
-        .shuffle(establishments)
-        .slice(0, 10);
+    return faker.helpers.shuffle(establishments).slice(0, 10);
 }
 
 async function getRandomLunchEstablishments(): Promise<Establishment[]> {
@@ -18,7 +16,7 @@ async function getRandomLunchEstablishments(): Promise<Establishment[]> {
 
     const { establishments } = await getNearbyEstablishments({
         latitude,
-        longitude
+        longitude,
     });
 
     return shuffleTop10(establishments);

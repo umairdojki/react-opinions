@@ -8,9 +8,12 @@ type EstablishmentListProps = {
 function EstablishmentList({ establishments }: EstablishmentListProps): ReactElement {
     return (
         <>
-            {establishments && establishments.map(establishment => {
-                return <div key={establishment.id}>{establishment.name} - {establishment.ratingValue}</div>
-            })}
+            {establishments &&
+                establishments.map((establishment) => (
+                    <div key={establishment.id}>
+                        {establishment.name} - {establishment.ratingValue}
+                    </div>
+                ))}
         </>
     );
 }

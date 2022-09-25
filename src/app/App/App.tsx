@@ -17,7 +17,7 @@ function App(): ReactElement {
             } catch (error) {
                 setFetchError(error as Error);
             }
-        }
+        };
 
         getRandomLunchEstablishmentsAsync();
     }, []);

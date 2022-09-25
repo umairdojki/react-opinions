@@ -4,24 +4,26 @@ import { Establishment, RatingValue } from 'src/shared/models/food-hygiene';
 type GetNearbyEstablishmentsRequest = {
     readonly latitude: number;
     readonly longitude: number;
-}
+};
 
 type GetNearbyEstablishmentsResponse = {
     readonly establishments: Establishment[];
-}
-
-function toModel(response: Array<EstablishmentResource>): Establishment[] {
-    const establishments = response
-        .map((establishment) => ({
-            id: establishment.FHRSID,
-            name: establishment.BusinessName,
-            ratingValue: establishment.RatingValue as RatingValue,
-        }));
-
-    return establishments;
 };
 
-async function getNearbyEstablishments({ latitude, longitude }: GetNearbyEstablishmentsRequest): Promise<GetNearbyEstablishmentsResponse> {
+function toModel(response: Array<EstablishmentResource>): Establishment[] {
+    const establishments = response.map((establishment) => ({
+        id: establishment.FHRSID,
+        name: establishment.BusinessName,
+        ratingValue: establishment.RatingValue as RatingValue,
+    }));
+
+    return establishments;
+}
+
+async function getNearbyEstablishments({
+    latitude,
+    longitude,
+}: GetNearbyEstablishmentsRequest): Promise<GetNearbyEstablishmentsResponse> {
     const baseUrl = 'https://api.ratings.food.gov.uk';
 
     const businessTypeId = 7844; // Takeaways and sandwich shops
@@ -38,7 +40,7 @@ async function getNearbyEstablishments({ latitude, longitude }: GetNearbyEstabli
 
     const options: RequestInit = {
         headers: {
-            'accept': 'application/json',
+            accept: 'application/json',
             'x-api-version': '2',
         },
     };
@@ -55,7 +57,7 @@ async function getNearbyEstablishments({ latitude, longitude }: GetNearbyEstabli
 
     return {
         establishments: toModel(establishments),
-    }
+    };
 }
 
 export { getNearbyEstablishments };
