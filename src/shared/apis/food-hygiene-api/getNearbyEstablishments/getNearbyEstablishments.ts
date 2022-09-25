@@ -1,5 +1,3 @@
-import { faker } from '@faker-js/faker';
-
 import { EstablishmentResource } from 'src/shared/apis/food-hygiene-api/resources';
 import { Establishment, RatingValue } from 'src/shared/models/food-hygiene';
 
@@ -9,7 +7,7 @@ type GetNearbyEstablishmentsRequest = {
 }
 
 type GetNearbyEstablishmentsResponse = {
-    readonly establishments: readonly Establishment[];
+    readonly establishments: Establishment[];
 }
 
 function toModel(response: Array<EstablishmentResource>): Establishment[] {
@@ -20,27 +18,19 @@ function toModel(response: Array<EstablishmentResource>): Establishment[] {
             ratingValue: establishment.RatingValue as RatingValue,
         }));
 
-    return faker.helpers
-        .shuffle(establishments)
-        .slice(0, 10);
+    return establishments;
 };
-
-function shuffleTop10(establishments: Establishment[]) {
-    return faker.helpers
-        .shuffle(establishments)
-        .slice(0, 10);
-}
 
 async function getNearbyEstablishments({ latitude, longitude }: GetNearbyEstablishmentsRequest): Promise<GetNearbyEstablishmentsResponse> {
     const baseUrl = 'https://api.ratings.food.gov.uk';
 
-    const takeawayBusinessTypeId = 7844; // Takeaway / sandwich shop
+    const businessTypeId = 7844; // Takeaways and sandwich shops
     const milesAway = 1;
 
     const queryString = new URLSearchParams([
         ['latitude', String(latitude)],
         ['longitude', String(longitude)],
-        ['businessTypeId', String(takeawayBusinessTypeId)],
+        ['businessTypeId', String(businessTypeId)],
         ['maxDistanceLimit', String(milesAway)],
     ]).toString();
 
@@ -64,7 +54,7 @@ async function getNearbyEstablishments({ latitude, longitude }: GetNearbyEstabli
     const { establishments } = response;
 
     return {
-        establishments: shuffleTop10(toModel(establishments)),
+        establishments: toModel(establishments),
     }
 }
 

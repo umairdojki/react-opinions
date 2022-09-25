@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 
 import dayjs from 'dayjs';
 
@@ -6,7 +6,7 @@ function getFormattedTime(): string {
     return dayjs(Date.now()).format('HH:mm:ss');
 }
 
-function Clock() {
+function Clock(): ReactElement {
     const [currentTime, setCurrentTime] = useState(getFormattedTime());
 
     useEffect(() => {

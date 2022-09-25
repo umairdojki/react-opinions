@@ -1,68 +1,37 @@
-import { useEffect, useState } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 
 import { Clock } from 'src/shared/components';
-import { getCurrentPosition } from 'src/shared/services';
 
-import { getNearbyEstablishments } from 'src/shared/apis/food-hygiene-api';
 import { Establishment } from 'src/shared/models/food-hygiene';
+import { getRandomLunchEstablishments } from 'src/features/lunch-roulette';
+import { EstablishmentList } from 'src/shared/components/EstablishmentList/EstablishmentList';
 
-function App() {
-    const [position, setPosition] = useState<GeolocationPosition | undefined>();
-    const [positionError, setPositionError] = useState<Error | undefined>();
-
-    const [establishments, setEstablishments] = useState<readonly Establishment[] | undefined>();
-    const [establishmentsError, setEstablishmentsError] = useState<Error | undefined>();
-
-    useEffect(() => {
-        const getCurrentLocationAsync = async () => {
-            try {
-                setPosition(await getCurrentPosition());
-            } catch (error) {
-                setPositionError(error as Error);
-            }
-        }
-
-        getCurrentLocationAsync();
-    }, []);
+function App(): ReactElement {
+    const [establishments, setEstablishments] = useState<Establishment[] | undefined>();
+    const [fetchError, setFetchError] = useState<Error | undefined>();
 
     useEffect(() => {
         const getNearbyEstablishmentsAsync = async () => {
-            if (!position) {
-                setEstablishments(undefined);
-                return;
-            }
-
             try {
-                const { latitude, longitude } = position.coords;
-
-                const { establishments } = await getNearbyEstablishments({
-                    latitude,
-                    longitude,
-                });
-
-                setEstablishments(establishments);
+                setEstablishments(await getRandomLunchEstablishments());
             } catch (error) {
                 console.error(error);
-                setEstablishmentsError(error as Error);
+                setFetchError(error as Error);
             }
         }
 
         getNearbyEstablishmentsAsync();
-    }, [position]);
+    }, []);
 
     return (
         <>
             <Clock />
-
-            {positionError && positionError.message}
+            <hr />
 
             {!establishments && 'Fetching...'}
+            {establishments && <EstablishmentList establishments={establishments} />}
 
-            {establishments && establishments.slice(0, 10).map(establishment => {
-                return <div key={establishment.id}>{establishment.name} - {establishment.ratingValue}</div>
-            })}
-
-            {establishmentsError && establishmentsError.message}
+            {fetchError && fetchError.message}
         </>
     );
 }
