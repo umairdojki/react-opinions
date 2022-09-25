@@ -11,16 +11,15 @@ function App(): ReactElement {
     const [fetchError, setFetchError] = useState<Error | undefined>();
 
     useEffect(() => {
-        const getNearbyEstablishmentsAsync = async () => {
+        const getRandomLunchEstablishmentsAsync = async () => {
             try {
                 setEstablishments(await getRandomLunchEstablishments());
             } catch (error) {
-                console.error(error);
                 setFetchError(error as Error);
             }
         }
 
-        getNearbyEstablishmentsAsync();
+        getRandomLunchEstablishmentsAsync();
     }, []);
 
     return (

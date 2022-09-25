@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 
-import { getCurrentPosition } from 'src/shared/services';
+import { getCurrentPosition } from 'src/shared/lib';
 
 import { getNearbyEstablishments } from 'src/shared/apis/food-hygiene-api';
 import { Establishment } from 'src/shared/models/food-hygiene';
@@ -12,21 +12,16 @@ function shuffleTop10(establishments: Establishment[]) {
 }
 
 async function getRandomLunchEstablishments(): Promise<Establishment[]> {
-    try {
-        const position = await getCurrentPosition();
+    const position = await getCurrentPosition();
 
-        const { latitude, longitude } = position.coords;
+    const { latitude, longitude } = position.coords;
 
-        const { establishments } = await getNearbyEstablishments({
-            latitude,
-            longitude
-        });
+    const { establishments } = await getNearbyEstablishments({
+        latitude,
+        longitude
+    });
 
-        return shuffleTop10(establishments);
-
-    } catch (error) {
-        throw new Error('Failed to get ')
-    }
+    return shuffleTop10(establishments);
 }
 
 export { getRandomLunchEstablishments };
