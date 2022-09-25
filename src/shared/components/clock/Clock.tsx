@@ -1,11 +1,12 @@
-import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
+
+import dayjs from 'dayjs';
 
 function getFormattedTime(): string {
     return dayjs(Date.now()).format('HH:mm:ss');
 }
 
-function App() {
+function Clock() {
     const [currentTime, setCurrentTime] = useState(getFormattedTime());
 
     useEffect(() => {
@@ -19,4 +20,4 @@ function App() {
     return <div>{currentTime}</div>;
 }
 
-export default App;
+export { Clock };

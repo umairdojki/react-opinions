@@ -1,8 +1,8 @@
 import { act, render, screen } from '@testing-library/react';
 
-import App from './App';
+import { Clock } from './Clock';
 
-describe('<App />', () => {
+describe('<Clock />', () => {
     beforeAll(() => {
         jest.useFakeTimers();
     });
@@ -14,7 +14,7 @@ describe('<App />', () => {
     it('shows current time initially', async () => {
         jest.setSystemTime(new Date('1970-12-31T01:02:34'))
 
-        render(<App />);
+        render(<Clock />);
 
         expect(screen.getByText('01:02:34')).toBeInTheDocument();
     });
@@ -22,7 +22,7 @@ describe('<App />', () => {
     it('updates time every second', async () => {
         jest.setSystemTime(new Date('1970-12-31T23:59:59'))
 
-        render(<App />);
+        render(<Clock />);
 
         act(() => { jest.advanceTimersByTime(500) });
         expect(await screen.findByText('23:59:59')).toBeInTheDocument();
