@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 
 import { Clock } from 'src/shared/components';
+import { getCurrentPosition } from 'src/shared/services';
 
 import { getNearbyEstablishments } from 'src/shared/apis/food-hygiene-api';
-import { getCurrentPosition } from 'src/shared/services';
 import { Establishment } from 'src/shared/models/food-hygiene';
 
 function App() {
@@ -28,7 +28,7 @@ function App() {
     useEffect(() => {
         const getNearbyEstablishmentsAsync = async () => {
             if (!position) {
-                setEstablishments([]);
+                setEstablishments(undefined);
                 return;
             }
 
@@ -56,8 +56,10 @@ function App() {
 
             {positionError && positionError.message}
 
+            {!establishments && 'Fetching...'}
+
             {establishments && establishments.slice(0, 10).map(establishment => {
-                return <div key={establishment.id}>{establishment.name}</div>
+                return <div key={establishment.id}>{establishment.name} - {establishment.ratingValue}</div>
             })}
 
             {establishmentsError && establishmentsError.message}

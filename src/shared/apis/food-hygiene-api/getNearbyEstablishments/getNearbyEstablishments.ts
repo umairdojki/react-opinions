@@ -24,9 +24,12 @@ const toModel = (response: Array<EstablishmentResource>): readonly Establishment
 async function getNearbyEstablishments({ latitude, longitude }: GetNearbyEstablishmentsRequest): Promise<GetNearbyEstablishmentsResponse> {
     const baseUrl = 'https://api.ratings.food.gov.uk';
 
+    const takeawayBusinessTypeId = 7844; // Takeaway / sandwich shop
+
     const queryString = new URLSearchParams([
         ['latitude', String(latitude)],
         ['longitude', String(longitude)],
+        ['businessTypeId', String(takeawayBusinessTypeId)],
     ]).toString();
 
     const url = `${baseUrl}/Establishments?${queryString}`;
