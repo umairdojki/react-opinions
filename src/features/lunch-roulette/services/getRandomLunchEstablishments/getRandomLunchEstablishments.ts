@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 
-import { getCurrentPosition } from 'src/shared/lib';
+import { getCurrentPosition } from 'src/shared/lib/geo';
 
 import { getNearbyEstablishments } from 'src/shared/apis/food-hygiene-api';
 import { Establishment } from 'src/shared/models/food-hygiene';
