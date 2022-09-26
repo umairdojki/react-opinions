@@ -2,7 +2,7 @@ import { faker } from '@faker-js/faker';
 
 import { getCurrentPosition } from 'src/shared/lib/geo';
 
-import { getNearbyEstablishments } from 'src/shared/apis/food-hygiene-api';
+import { getNearbyEstablishments } from 'src/shared/services/food-hygiene-api';
 import { Establishment } from 'src/shared/models/food-hygiene';
 
 function shuffleTop10(establishments: Establishment[]) {

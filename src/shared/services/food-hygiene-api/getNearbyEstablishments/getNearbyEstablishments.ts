@@ -1,4 +1,4 @@
-import { EstablishmentResource } from 'src/shared/apis/food-hygiene-api/resources';
+import { EstablishmentResource } from 'src/shared/services/food-hygiene-api/resources';
 import { Establishment, RatingValue } from 'src/shared/models/food-hygiene';
 
 type GetNearbyEstablishmentsRequest = {
