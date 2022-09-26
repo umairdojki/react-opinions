@@ -10,7 +10,7 @@ type GetNearbyEstablishmentsResponse = {
     readonly establishments: Establishment[];
 };
 
-function toModel(response: Array<EstablishmentResource>): Establishment[] {
+function toModel(response: EstablishmentResource[]): Establishment[] {
     const establishments = response.map((establishment) => ({
         id: establishment.FHRSID,
         name: establishment.BusinessName,
