@@ -14,9 +14,6 @@ function Clock(): ReactElement {
             setCurrentTime(getFormattedTime());
         }, 1000);
 
-        // eslint-disable-next-line no-console
-        console.log('clock');
-
         return () => clearInterval(intervalId);
     }, []);
 
